@@ -1,0 +1,334 @@
+body {
+    background-color: rgb(105, 166, 170);
+  
+    margin-left: 50px;
+    margin-right: 50px;
+    text-align: center;
+    @font-face {
+        font-family: determination;
+        src: url(../fuentes/determination-mono-web-font/DeterminationMonoWebRegular.Z5oq.ttf);
+    }
+}
+
+.fondo-luna {
+    background-image: url(../imagenes/Luna_gris.jfif);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-attachment: fixed;
+
+}
+
+#Tituloindex { 
+    font-size: 40px;
+    font-family:cursive;
+    background-color: rgb(174, 250, 246);
+    margin-right: 150px;
+    margin-left: 150px;
+    color: rgb(0, 0, 0);
+}
+
+#Descripcion {
+    font-size: 24px;
+    font-family: cursive;
+    color: rgb(104, 180, 127);
+
+}
+
+
+.comienzo { 
+    background-color: aquamarine;
+    margin-left: 50px;
+    margin-right: 50px;
+    text-align: center;
+    background-image: url(../imagenes/despertar\ en\ la\ oscuridad.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-attachment: fixed;
+}
+
+#Nivel1 {
+    color: aliceblue;
+    font-family: fantasy;
+}
+
+#DespertarEnLaOscuridad {
+    color: aliceblue;
+    font-family: cursive;
+    background-color: rgba(87, 136, 136, 0.432);
+    margin-left: 350px;
+    margin-right: 350px;
+}
+
+#Parrafo1 {
+    color: azure;
+    font-family:monospace;
+    font-size: 20px;
+    border-color:black;
+}
+
+#DecisionLuz { 
+color: black;
+background-color: aliceblue;
+margin-left: 350px;
+margin-right: 350px;
+font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+font-size: 30px;
+}
+
+#DecisionOscuridad { 
+    color:beige;
+    background-color:black;
+    margin-left: 350px;
+    margin-right: 350px;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 30px;
+    }
+
+
+.fondo-oscuridad { 
+    background-image: url(../imagenes/decides\ explorar\ lo\ oscuro.jfif);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-attachment: fixed;
+    
+}
+
+#DecidesExplorarLaOscuridad {
+    color:rgb(145, 145, 145);
+    font-family: cursive;
+    background-color: rgba(0, 0, 0, 0.432);
+    margin-left: 350px;
+    margin-right: 350px;
+}
+
+#Parrafo2 {
+    color: rgba(240, 255, 255, 0.521);
+    font-family:monospace;
+    font-size: 20px;
+    border-color:black;
+}
+
+#footeroscuridad {
+    width: 100%;
+    opacity: 0.8;
+    object-fit: cover;
+    padding-top: 100%;
+    -ms-flex-item-align: center;
+    
+
+}
+
+
+.fondo-luz { 
+    background-image: url(../imagenes/decides\ ir\ a\ la\ luz.jfif);
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-size: 100%;
+    background-attachment: fixed;
+}
+
+#DecidesAcercarteConLaLuz {
+    color:rgb(255, 255, 255);
+    font-family: cursive;
+    background-color: rgba(153, 202, 204, 0.788);
+    margin-left: 250px;
+    margin-right: 250px;
+}
+
+#Parrafo3 {
+    color: azure;
+    font-family:monospace;
+    font-size: 20px;
+    border-color:black;
+}
+
+#footerluz {
+    width: 100%;
+    opacity: 0.8;
+    object-fit: cover;
+    padding-top: 100%;
+    -ms-flex-item-align: center;
+    
+
+}
+
+
+ul.navbar {
+    position: absolute;
+    top: 2em;
+    left: 1em;
+    width: 9em;
+    background-color: bisque;
+}
+
+
+.logo {
+    width: 4em;
+}
+
+
+.QuienesSomos {
+    background-color: rgb(68, 126, 107); 
+    background-image: url(../imagenes/nubes.jfif);   
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: 65%;
+    background-blend-mode:multiply;
+    background-attachment: fixed;
+}
+
+#TituloSobreNosotras { 
+    font-size: 35px;
+    font-family:cursive;
+    background-color: rgba(174, 233, 230, 0.459);
+    margin-right: 150px;
+    margin-left: 150px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    
+}
+
+#SubtituloSobreNosotras {
+    font-size: 35px;
+    font-family:cursive;
+    margin-right: 150px;
+    margin-left: 150px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+}
+
+#TextoOculto {
+    opacity: 1%;
+    text-align: end;
+}
+
+
+.OrigenDeLasEnseñanzas {
+    background-image: url(../imagenes/Fondo713.webp);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    background-position-y: 25%;
+    background-attachment: fixed;
+    
+}
+
+#Logo713 {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 40%;
+    align-items: center;
+}
+
+#Escuela713 {
+    font-size: 25px;
+    font-family:cursive;
+    margin-right: 150px;
+    margin-left: 150px;
+    color:aliceblue;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    border-color:rgba(105, 255, 205, 0.582);
+    border-style: solid;
+    
+}
+
+
+.HistoriaOculta {
+    background-image: url(../imagenes/FondoPaisaje.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    background-position-y: 80%;
+    background-attachment: fixed;
+}
+
+#TituloHistoria {
+    font-size: 35px;
+    font-family:fantasy;
+    background-color: rgba(174, 233, 230, 0.459);
+    margin-right: 150px;
+    margin-left: 150px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+}
+
+#HistoriaJuego {
+    font-size: 25px;
+    font-weight: bold;
+    font-family:cursive;
+    margin-left: 100px;
+    margin-right: 100px;
+    color:rgb(187, 247, 227);
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color:rgb(102, 156, 173);
+
+
+}
+
+#HistoriaHakumi {
+    font-size: 25px;
+    font-weight: bold;
+    font-family:monospace;
+    margin-left: 100px;
+    margin-right: 100px;
+    color:rgb(187, 247, 227);
+}
+
+#TamañoImagen {
+    width: 50%;
+    object-fit: cover;
+    -ms-flex-item-align: center;
+    border: 5px;
+    border-color: aqua;
+}
+
+#PalabraSignificados {
+    font-size: 17px;
+    font-weight: bold;
+    font-family:cursive;
+    color:aquamarine;
+    text-align: end;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color:rgb(0, 0, 0);
+    background-color: rgba(127, 255, 212, 0.315);
+    margin-left: 500px;
+}
+
+
+.Curiosidades-Actualizaciones {
+    background-image: url(../imagenes/FondoPaisajeUniverso.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    background-position-y: 80%;
+    background-attachment: fixed;
+}
+
+#Subtitulos {
+    font-size: 35px;
+    font-family:fantasy;
+    margin-right: 150px;
+    margin-left: 150px;
+    color:aquamarine;
+    text-align: center;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color:rgb(0, 0, 0);
+}
+
+#Datos {
+    font-size: 25px;
+    font-weight: bold;
+    font-family:cursive;
+    margin-left: 100px;
+    margin-right: 100px;
+    color:rgb(187, 247, 227);
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color:black;
+    text-align: left;
+}
+
+
+
+
