@@ -41,33 +41,51 @@ El proyecto está construido sobre Next.js (v16.2.6) usando TypeScript y React.
 
 ---
 
-## 3. Estado de Juego y Sistema de Saltos Temporales (`lib/store.ts`)
+## 3. Funcionamiento de "Tejidos" (Diagrama de Flujo Interactivo)
 
-El estado del juego utiliza un sistema de **historial basado en instantáneas** para posibilitar viajes en el tiempo consistentes:
+El menú lateral derecho integra la pestaña **TEJIDO** (`components/StoryFlowchart.tsx`), que renderiza el mapa del destino de forma visual y responsiva utilizando una técnica híbrida:
 
-### Estructuras de Datos
-* **`HistoryStep`**: Registra `{ sceneId, ansiedad, esperanza, thoughts }`.
-* **`visitedNodeIds`**: Almacena de forma global todos los nodos que se han visitado alguna vez (se preserva al reiniciar una partida para mantener el mapa de exploración desbloqueado).
-
-### Lógica de `jumpToNode(sceneId)`
-1. **Viaje en Línea Temporal Actual:** Si el nodo de destino está en la pila de `history`, el juego simplemente corta la pila hasta ese índice y restaura el estado mental guardado en esa instantánea.
-2. **Viaje Cruzado (Cross-Playthrough):** Si el nodo de destino fue visitado en otra partida pero no está en la línea de tiempo actual, el sistema ejecuta una **búsqueda en anchura (BFS)** sobre el grafo de `storyNodes` partiendo desde `'start'`. Calcula la ruta más corta hasta el nodo objetivo, acumula los cambios de estadísticas y pensamientos de cada opción tomada, y genera un historial simulado consistente para posicionar al jugador directamente allí.
+1. **Lienzo SVG de Fondo (viewBox `0 0 100 115`):**
+   * Dibuja curvas Bezier cúbicas (`C`) para las conexiones de las transiciones de la historia.
+   * Si una línea fue recorrida en la partida actual (de `from` a `to`), se ilumina con un gradiente animado y resplandeciente (`#f43f5e` para el lado de la luz/ansiedad, `#3b82f6` para el lado de la sombra/esperanza).
+   * Si la línea fue visitada en otra partida anterior, se muestra en gris sólido.
+   * Si aún no ha sido explorada en ningún playthrough, se dibuja como una línea punteada oscura casi invisible.
+2. **Nodos Interactivos HTML:**
+   * Posicionados absolutamente sobre el SVG en base a coordenadas porcentuales `left: X%`, `top: Y%` que coinciden con los puntos del SVG.
+   * **Nodos Visitados (Activos/Pasados):** Se muestran a color, tienen hover effects, tooltips informativos con descripción y responden al hacer clic para viajar en el tiempo.
+   * **Nodo Actual:** Posee un contorno brillante con animación de pulsación (`animate-ping`).
+   * **Nodos No Visitados:** Aparecen en gris oscuro apagado, con bordes punteados y no son interactivos (sin cursor pointer ni click handler).
 
 ---
 
-## 4. Instrucciones para Expandir y Actualizar el Juego
+## 4. Estado de Juego y Sistema de Saltos Temporales (`lib/store.ts`)
+
+El estado del juego utiliza un sistema de **historial basado en instantáneas** para posibilitar viajes en el tiempo consistentes a través del Tejido:
+
+### Estructuras de Datos
+* **`HistoryStep`**: Registra `{ sceneId, ansiedad, esperanza, thoughts }`.
+* **`visitedNodeIds`**: Almacena de forma global todos los nodos que se han visitado alguna vez (se preserva al reiniciar una partida para mantener el mapa de exploración desbloqueado en el Tejido).
+
+### Lógica de `jumpToNode(sceneId)`
+1. **Viaje en Línea Temporal Actual:** Si el nodo de destino está en la pila de `history`, el juego corta la pila hasta ese índice y restaura el estado mental (ansiedad, esperanza, pensamientos) guardado en esa instantánea.
+2. **Viaje Cruzado (Cross-Playthrough):** Si el nodo fue visitado en otra partida pero no está en la línea de tiempo actual, el sistema ejecuta una **búsqueda en anchura (BFS)** sobre el grafo de `storyNodes` partiendo desde `'start'`. Calcula la ruta más corta hasta el nodo objetivo, acumula los cambios de estadísticas y pensamientos de cada opción tomada, y genera un historial simulado consistente para posicionar al jugador directamente allí.
+
+---
+
+## 5. Instrucciones para Expandir y Actualizar el Juego
 
 Cuando agregues nuevas escenas, puzles o mecánicas, sigue al pie de la letra estas directrices:
 
-### A. Añadir una nueva escena
+### A. Añadir una nueva escena (Regla Obligatoria)
 1. Define la escena en [storyNodes.ts](file:///c:/Users/Sofiwii/Desktop/cosas importantes de toda mi computadora/Juego terapeutico (proyecto personal)/hakumi/lib/storyNodes.ts).
 2. Estructura la propiedad `choices` asociando cada opción a su `nextSceneId`.
 3. Utiliza cambios incrementales moderados en `stateChanges` (por ejemplo, `ansiedad: 5` o `esperanza: -2`).
 4. Si la decisión genera una revelación interna, asóciala a un `newThought` para poblar la pestaña de pensamientos fragmentados.
+5. **[MANDATORIO] Actualización del Tejido:** Es obligatorio que cada vez que agreguemos un fragmento de historia en `storyNodes.ts`, actualices el componente [StoryFlowchart.tsx](file:///c:/Users/Sofiwii/Desktop/cosas importantes de toda mi computadora/Juego terapeutico (proyecto personal)/hakumi/components/StoryFlowchart.tsx) para incluir ese nuevo nodo en el diagrama visual con su respectivo camino (detallado en el apartado B).
 
 ### B. Actualizar el Diagrama de Flujo (`components/StoryFlowchart.tsx`)
 Si agregas nodos narrativos intermedios o nuevos finales, debes actualizar el componente visual del diagrama:
-1. **Definir Coordenadas en HTML/SVG:** Añade el nodo al arreglo `FLOW_NODES` asignándole coordenadas relativas `x` e `y` (porcentaje) para posicionarlo en el lienzo responsive.
+1. **Definir Coordenadas en HTML/SVG:** Añade el nodo al arreglo `FLOW_NODES` asignándole coordenadas relativas `x` e `y` (porcentaje) para posicionarlo en el lienzo.
    * *Coordenadas actuales (Lienzo 100x115):*
      * `start`: `(50, 15)`
      * `escena_luz`: `(20, 50)` | `escena_oscuridad`: `(80, 50)`
