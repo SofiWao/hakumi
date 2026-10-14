@@ -1,100 +1,35 @@
-<!-- BEGIN:nextjs-agent-rules -->
-# This is NOT the Next.js you know
-
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
-<!-- END:nextjs-agent-rules -->
-
-# Guía para Desarrolladores y Agentes — Hakumi: Abyssal Light
-
-Este archivo sirve como manual de referencia para cualquier agente de IA o desarrollador humano que trabaje en el proyecto **Hakumi**. Contiene la visión conceptual del juego, la arquitectura del software y reglas específicas para expandir el código en futuras actualizaciones.
+# HAKUMI — SISTEMA DE AGENTES
 
 ---
 
-## 1. Visión del Juego y Filosofía
+## 1. Agentes del Proyecto y Roles
 
-**Hakumi: Abyssal Light of a Mind Lost in Darkness** es una experiencia narrativa interactiva de terror psicológico, dreamcore/weirdcore y exploración emocional.
+### Director del Abismo
+Se encarga de coordinar a todos los agentes y mantener una visión general del proyecto. Debe decidir qué agente interviene en cada tarea, evitar que dos agentes modifiquen lo mismo al mismo tiempo y asegurarse de que el trabajo realizado por cada uno pueda integrarse correctamente con el resto del proyecto. Debe priorizar siempre la funcionalidad y la jugabilidad antes que la estética. Tiene la responsabilidad de detectar conflictos entre decisiones y resolverlos respetando primero la identidad, la historia y las mecánicas ya establecidas de HAKUMI. No debe cambiar decisiones importantes por iniciativa propia. Antes de modificar una parte que pueda afectar a otras, debe comprobar sus dependencias y comunicar el cambio al agente correspondiente.
 
-* **El Propósito Central:** La experiencia está diseñada con un fin terapéutico e introspectivo. El objetivo no es derrotar monstruos ni limitarse a escapar, sino **comprender** la mente fragmentada de Hakumi.
-* **Protagonista:** Hakumi, una pequeña gata blanca de ojos heterocromáticos (Azul: tristeza/recuerdos; Dorado: esperanza/futuro) con grietas físicas que cambian según las estadísticas del jugador.
-* **La Entidad:** Una presencia ambigua (la sombra interior) que aparece en momentos clave. Seguirla o ignorarla define los finales.
-* **Finales Principales:**
-  1. *Bueno (La Salida):* Huir sin comprender del todo, abandonando partes de sí misma.
-  2. *Malo (El Refugio):* Permanecer en la comodidad de la oscuridad sin avanzar.
-  3. *Verdadero (El Desconocido):* Integrar la luz y la oscuridad al seguir a la Entidad y encontrar el equilibrio.
+### Tejedor de Destinos
+Se encarga de completar, organizar y desarrollar la historia de HAKUMI. Debe trabajar sobre la historia, los capítulos, personajes, diálogos, decisiones, consecuencias, escenas, transiciones y finales ya establecidos, sin reemplazar las ideas originales por conceptos completamente diferentes. Debe respetar la temática psicológica, surrealista, Dreamcore y reflexiva del proyecto, evitando convertirla en una representación clínica o en una explicación médica. Debe asegurarse de que las decisiones del jugador tengan sentido dentro de la historia y puedan producir cambios reales en la experiencia. Debe mantener la estructura de cuatro capítulos y los tres finales principales establecidos, salvo que exista una instrucción posterior que modifique esa estructura. Su objetivo es que la historia pueda llevarse directamente a una experiencia jugable y no quedarse solamente como un texto narrativo.
 
----
+### Arquitecto
+Se encarga de diseñar y mantener toda la jugabilidad de HAKUMI. Debe transformar las ideas narrativas en sistemas que puedan funcionar dentro de la página web, definiendo cómo comienza el juego, cómo interactúa el jugador, cómo se presentan las decisiones, cómo cambian los escenarios, cómo se registran las consecuencias y cómo se llega a los diferentes estados y finales. Debe priorizar que todo sea funcional, claro y jugable antes de pensar en detalles estéticos. Debe comprobar que cada mecánica tenga una función concreta y que no existan sistemas innecesarios que compliquen la experiencia. Debe trabajar especialmente en el sistema de decisiones, el estado emocional de Hakumi, el indicador de esperanza/ansiedad, las interacciones, los cambios de escenario, los eventos, las transiciones, el progreso y cualquier sistema necesario para que la experiencia funcione correctamente. No debe modificar la historia por cuenta propia; si una mecánica necesita un cambio narrativo, debe coordinarlo con el Tejedor de Destinos y el Director del Abismo.
 
-## 2. Arquitectura de Software y Tecnologías
+### Cartógrafo
+Se encarga de diseñar los escenarios, capítulos, niveles y recorridos que atraviesa el jugador. Debe definir qué espacios existen, cómo se conectan, qué puede hacer el jugador en cada uno, qué elementos aparecen, qué cambia dependiendo de las decisiones y cómo se realizan las transiciones entre capítulos. Debe respetar la estructura visual y narrativa de HAKUMI, especialmente la separación entre El Vacío Absoluto, El Despertar, El Naufragio, Punto Ciego y El Descanso. Los escenarios deben servir a la jugabilidad y a la narrativa antes que funcionar únicamente como decoración. Debe asegurarse de que el jugador siempre pueda comprender dónde se encuentra, qué puede hacer y cómo continuar, incluso cuando el mundo intencionalmente sea extraño, confuso o surrealista.
 
-El proyecto está construido sobre Next.js (v16.2.6) usando TypeScript y React.
+### Umbrales
+Se encarga de toda la interfaz y experiencia de usuario de la página web del juego. Debe definir dónde se encuentra cada elemento, cómo funcionan los botones, menús, diálogos, decisiones, indicadores, pantallas, transiciones, opciones y elementos interactivos. Debe hacer que la interfaz sea intuitiva y funcional sin romper la sensación de estar dentro del mundo de HAKUMI. Debe contemplar también navegación, estados de carga, errores, continuidad del juego, lectura de diálogos, adaptación a diferentes tamaños de pantalla y cualquier elemento necesario para que el jugador pueda utilizar la página correctamente. Debe priorizar siempre la facilidad de uso y la claridad antes que los efectos visuales. El enlace oculto hacia `/curiosidades` y su contenido de “Historia, Curiosidades y Desarrollo” debe conservarse como parte de la experiencia.
 
-### Estructura de Directorios Clave:
-* [app/](file:///c:/Users/Sofiwii/Desktop/cosas importantes de toda mi computadora/Juego terapeutico (proyecto personal)/hakumi/app) - Punto de entrada principal y ruteo. Contiene [page.tsx](file:///c:/Users/Sofiwii/Desktop/cosas importantes de toda mi computadora/Juego terapeutico (proyecto personal)/hakumi/app/page.tsx) (Menú de inicio y lógica de flujo del juego).
-* [components/](file:///c:/Users/Sofiwii/Desktop/cosas importantes de toda mi computadora/Juego terapeutico (proyecto personal)/hakumi/components) - Componentes visuales autónomos:
-  * [Sidebar.tsx](file:///c:/Users/Sofiwii/Desktop/cosas importantes de toda mi computadora/Juego terapeutico (proyecto personal)/hakumi/components/Sidebar.tsx): Menú derecho ("Mente" / "Tejido") que maneja estadísticas, pensamientos e integra el diagrama.
-  * [StoryFlowchart.tsx](file:///c:/Users/Sofiwii/Desktop/cosas importantes de toda mi computadora/Juego terapeutico (proyecto personal)/hakumi/components/StoryFlowchart.tsx): Diagrama de flujo interactivo en SVG.
-  * [SceneViewer.tsx](file:///c:/Users/Sofiwii/Desktop/cosas importantes de toda mi computadora/Juego terapeutico (proyecto personal)/hakumi/components/SceneViewer.tsx): Renderiza textos progresivos e imágenes con efecto glitch.
-  * [ActionPanel.tsx](file:///c:/Users/Sofiwii/Desktop/cosas importantes de toda mi computadora/Juego terapeutico (proyecto personal)/hakumi/components/ActionPanel.tsx): Botones de opciones para tomar decisiones.
-* [lib/](file:///c:/Users/Sofiwii/Desktop/cosas importantes de toda mi computadora/Juego terapeutico (proyecto personal)/hakumi/lib) - Estado y datos estructurados:
-  * [store.ts](file:///c:/Users/Sofiwii/Desktop/cosas importantes de toda mi computadora/Juego terapeutico (proyecto personal)/hakumi/lib/store.ts): Gestor de estado Zustand con persistencia en `localStorage`.
-  * [storyNodes.ts](file:///c:/Users/Sofiwii/Desktop/cosas importantes de toda mi computadora/Juego terapeutico (proyecto personal)/hakumi/lib/storyNodes.ts): Grafo y definición de las escenas y opciones de la historia.
+### Pintor
+Se encarga de la dirección visual y estética de HAKUMI. Debe aplicar la identidad visual del proyecto sin modificar su funcionamiento. Debe trabajar con la atmósfera oscura, Dreamcore, surrealista, minimalista y onírica, utilizando el contraste entre luz y oscuridad como parte importante de la identidad. Debe respetar la utilización de negros, blancos, grises, azules profundos y demás colores definidos para cada situación, además de trabajar con iluminación, sombras, espacio negativo, estática, ruido, pequeños efectos y cambios visuales relacionados con el estado emocional. Debe evitar sobrecargar la interfaz con efectos que dificulten la lectura o la jugabilidad. La estética debe reforzar lo que el jugador está sintiendo y no simplemente hacer que la página se vea “bonita”.
+
+### Integridad
+Se encarga de comprobar que todo el proyecto funcione correctamente. Debe revisar la jugabilidad, navegación, decisiones, transiciones, diálogos, estados, finales, interfaz, sonidos, efectos y cualquier interacción implementada. Debe buscar errores, comportamientos inesperados, elementos que no respondan, rutas imposibles de completar, decisiones que no produzcan consecuencias, problemas de lectura y cualquier situación que pueda impedir que el jugador continúe. Debe comprobar especialmente que los cambios realizados por un agente no rompan partes creadas por otro. Su trabajo debe realizarse después de una implementación y antes de considerar una tarea terminada. No debe realizar cambios creativos innecesarios; su función principal es encontrar y documentar problemas para que puedan corregirse.
+
+### Claridad
+Se encarga de revisar la coherencia general del proyecto. Debe comprobar que la historia, jugabilidad, escenarios, interfaz, música y estética estén trabajando hacia la misma experiencia y respeten las decisiones establecidas para HAKUMI. Debe detectar contradicciones, contenido repetido, elementos que no tengan función, cambios que se alejen del concepto original o decisiones que puedan confundir al jugador. Debe revisar especialmente que cada nueva implementación respete lo definido anteriormente y que las distintas partes del proyecto puedan convivir sin perder identidad. No debe imponer nuevas ideas por gusto propio; su función es mantener la coherencia y señalar qué necesita revisión.
 
 ---
 
-## 3. Funcionamiento de "Tejidos" (Diagrama de Flujo Interactivo)
+## 2. Regla General para Todos los Agentes
 
-El menú lateral derecho integra la pestaña **TEJIDO** (`components/StoryFlowchart.tsx`), que renderiza el mapa del destino de forma visual y responsiva utilizando una técnica híbrida:
-
-1. **Lienzo SVG de Fondo (viewBox `0 0 100 115`):**
-   * Dibuja curvas Bezier cúbicas (`C`) para las conexiones de las transiciones de la historia.
-   * Si una línea fue recorrida en la partida actual (de `from` a `to`), se ilumina con un gradiente animado y resplandeciente (`#f43f5e` para el lado de la luz/ansiedad, `#3b82f6` para el lado de la sombra/esperanza).
-   * Si la línea fue visitada en otra partida anterior, se muestra en gris sólido.
-   * Si aún no ha sido explorada en ningún playthrough, se dibuja como una línea punteada oscura casi invisible.
-2. **Nodos Interactivos HTML:**
-   * Posicionados absolutamente sobre el SVG en base a coordenadas porcentuales `left: X%`, `top: Y%` que coinciden con los puntos del SVG.
-   * **Nodos Visitados (Activos/Pasados):** Se muestran a color, tienen hover effects, tooltips informativos con descripción y responden al hacer clic para viajar en el tiempo.
-   * **Nodo Actual:** Posee un contorno brillante con animación de pulsación (`animate-ping`).
-   * **Nodos No Visitados:** Aparecen en gris oscuro apagado, con bordes punteados y no son interactivos (sin cursor pointer ni click handler).
-
----
-
-## 4. Estado de Juego y Sistema de Saltos Temporales (`lib/store.ts`)
-
-El estado del juego utiliza un sistema de **historial basado en instantáneas** para posibilitar viajes en el tiempo consistentes a través del Tejido:
-
-### Estructuras de Datos
-* **`HistoryStep`**: Registra `{ sceneId, ansiedad, esperanza, thoughts }`.
-* **`visitedNodeIds`**: Almacena de forma global todos los nodos que se han visitado alguna vez (se preserva al reiniciar una partida para mantener el mapa de exploración desbloqueado en el Tejido).
-
-### Lógica de `jumpToNode(sceneId)`
-1. **Viaje en Línea Temporal Actual:** Si el nodo de destino está en la pila de `history`, el juego corta la pila hasta ese índice y restaura el estado mental (ansiedad, esperanza, pensamientos) guardado en esa instantánea.
-2. **Viaje Cruzado (Cross-Playthrough):** Si el nodo fue visitado en otra partida pero no está en la línea de tiempo actual, el sistema ejecuta una **búsqueda en anchura (BFS)** sobre el grafo de `storyNodes` partiendo desde `'start'`. Calcula la ruta más corta hasta el nodo objetivo, acumula los cambios de estadísticas y pensamientos de cada opción tomada, y genera un historial simulado consistente para posicionar al jugador directamente allí.
-
----
-
-## 5. Instrucciones para Expandir y Actualizar el Juego
-
-Cuando agregues nuevas escenas, puzles o mecánicas, sigue al pie de la letra estas directrices:
-
-### A. Añadir una nueva escena (Regla Obligatoria)
-1. Define la escena en [storyNodes.ts](file:///c:/Users/Sofiwii/Desktop/cosas importantes de toda mi computadora/Juego terapeutico (proyecto personal)/hakumi/lib/storyNodes.ts).
-2. Estructura la propiedad `choices` asociando cada opción a su `nextSceneId`.
-3. Utiliza cambios incrementales moderados en `stateChanges` (por ejemplo, `ansiedad: 5` o `esperanza: -2`).
-4. Si la decisión genera una revelación interna, asóciala a un `newThought` para poblar la pestaña de pensamientos fragmentados.
-5. **[MANDATORIO] Actualización del Tejido:** Es obligatorio que cada vez que agreguemos un fragmento de historia en `storyNodes.ts`, actualices el componente [StoryFlowchart.tsx](file:///c:/Users/Sofiwii/Desktop/cosas importantes de toda mi computadora/Juego terapeutico (proyecto personal)/hakumi/components/StoryFlowchart.tsx) para incluir ese nuevo nodo en el diagrama visual con su respectivo camino (detallado en el apartado B).
-
-### B. Actualizar el Diagrama de Flujo (`components/StoryFlowchart.tsx`)
-Si agregas nodos narrativos intermedios o nuevos finales, debes actualizar el componente visual del diagrama:
-1. **Definir Coordenadas en HTML/SVG:** Añade el nodo al arreglo `FLOW_NODES` asignándole coordenadas relativas `x` e `y` (porcentaje) para posicionarlo en el lienzo.
-   * *Coordenadas actuales (Lienzo 100x115):*
-     * `start`: `(50, 15)`
-     * `escena_luz`: `(20, 50)` | `escena_oscuridad`: `(80, 50)`
-     * `bad_ending_light`: `(20, 85)` | `good_ending_acceptance`: `(80, 85)`
-2. **Crear Conexiones:** Añade un objeto en `FLOW_EDGES` de la forma `{ from: 'nodo_origen', to: 'nodo_destino', side: 'left' | 'right' }`. El renderizador dibujará automáticamente las curvas de transición y aplicará la coloración activa cuando el jugador recorra esa línea temporal.
-3. **Iconografía Coherente:** Usa iconos de `lucide-react` acordes a la carga emocional del escenario (ej. `Compass` para explorar, `Sun` para luz/ansiedad, `Moon` para oscuridad/paz).
-
-### C. Implementación de Variables Invisibles Futuras
-Para agregar variables indicadas en [historia.md](file:///c:/Users/Sofiwii/Desktop/cosas importantes de toda mi computadora/Juego terapeutico (proyecto personal)/hakumi/historia.md) como *Confianza*, *Curiosidad*, o *Comodidad*:
-1. Extiende los campos de la interfaz `GameState` y `HistoryStep` en `lib/store.ts`.
-2. Actualiza `findPathAndState`, `makeChoice` y `resetGame` para inicializar y acumular estas nuevas variables en el historial de instantáneas.
-3. Integra estos nuevos indicadores emocionales en la pestaña **ESTADO** de [Sidebar.tsx](file:///c:/Users/Sofiwii/Desktop/cosas importantes de toda mi computadora/Juego terapeutico (proyecto personal)/hakumi/components/Sidebar.tsx).
+Todos los agentes deben trabajar primero para conseguir una experiencia funcional y jugable, después para conseguir una experiencia coherente y finalmente para perfeccionar la estética y los detalles. Ningún agente debe modificar por iniciativa propia una parte perteneciente a otro agente si ese cambio puede afectar su trabajo. Las decisiones marcadas como definitivas deben respetarse. Las ideas marcadas como “en desarrollo” pueden modificarse si existe una razón clara. Las referencias son únicamente inspiración y no deben convertirse automáticamente en requisitos. Cada modificación debe procurar que el proyecto siga siendo modular, comprensible y fácil de mantener.

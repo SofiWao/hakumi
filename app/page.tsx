@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import SceneViewer from '@/components/SceneViewer';
 import ActionPanel from '@/components/ActionPanel';
 import Sidebar from '@/components/Sidebar';
+import LoadingScreen from '@/components/LoadingScreen';
 import { useGameStore } from '@/lib/store';
 import { storyNodes } from '@/lib/storyNodes';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -14,28 +15,49 @@ export default function HakumiGame() {
   const history = useGameStore((state) => state.history);
   const currentNode = storyNodes[currentSceneId];
   const [mounted, setMounted] = useState(false);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [isSceneLoading, setIsSceneLoading] = useState(false);
   const [appState, setAppState] = useState<'menu' | 'playing' | 'exited'>('menu');
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
+
+    const timer = setTimeout(() => {
+      setIsInitialLoading(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
   }, []);
 
-  if (!mounted) {
-    return <div className="min-h-screen bg-zinc-950 flex items-center justify-center text-zinc-500 font-mono">Cargando mente...</div>;
+  if (!mounted || isInitialLoading) {
+    return <LoadingScreen durationMs={5000} subtext="Construyendo el entramado de la psique..." />;
   }
 
   const handleNewGame = () => {
+    setIsSceneLoading(true);
     resetGame();
-    setAppState('playing');
+    setTimeout(() => {
+      setAppState('playing');
+      setIsSceneLoading(false);
+    }, 5000);
   };
 
   const handleContinue = () => {
-    setAppState('playing');
+    setIsSceneLoading(true);
+    setTimeout(() => {
+      setAppState('playing');
+      setIsSceneLoading(false);
+    }, 5000);
   };
 
   const handleExit = () => {
     setAppState('exited');
   };
+
+  if (isSceneLoading) {
+    return <LoadingScreen durationMs={5000} subtext="Abriendo el umbral de la realidad..." />;
+  }
 
   if (appState === 'exited') {
     return (

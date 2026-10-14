@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { useGameStore } from '@/lib/store';
 import { 
   Compass, 
@@ -8,8 +7,17 @@ import {
   Moon, 
   EyeOff, 
   Heart, 
+  Clock,
+  Sparkles,
+  Anchor,
+  Ghost,
+  ShieldAlert,
   HelpCircle,
-  Clock
+  Sparkle,
+  Eye,
+  CloudFog,
+  Flame,
+  CheckCircle2
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -26,63 +34,245 @@ interface FlowNode {
 }
 
 const FLOW_NODES: FlowNode[] = [
+  // Capítulo I: El Despertar
   {
     id: 'start',
     name: 'El Despertar',
-    description: 'Hakumi despierta sin recuerdos en el umbral del abismo.',
+    description: 'Hakumi despierta en un neutro absoluto. Abre los ojos.',
     icon: Compass,
     x: 50,
-    y: 15,
+    y: 6,
     color: 'from-zinc-400 to-zinc-600',
     glowColor: 'rgba(255,255,255,0.2)'
   },
   {
-    id: 'escena_luz',
-    name: 'Camino de Luz',
-    description: 'Un resplandor cegador que exige brillar y ocultar el dolor.',
+    id: 'escena_resplandor',
+    name: 'El Resplandor',
+    description: 'Luz cálida y deslumbrante que enmascara las grietas.',
     icon: Sun,
-    x: 20,
-    y: 50,
+    x: 25,
+    y: 18,
     color: 'from-amber-400 to-red-500',
     glowColor: 'rgba(239,68,68,0.4)'
   },
   {
-    id: 'escena_oscuridad',
-    name: 'Camino de Sombras',
-    description: 'Un frío manto negro que trae paz y revela formas ocultas.',
+    id: 'escena_penumbra',
+    name: 'La Penumbra',
+    description: 'Silencio desolado y desorientador en el manto frío.',
     icon: Moon,
-    x: 80,
-    y: 50,
+    x: 75,
+    y: 18,
     color: 'from-cyan-400 to-blue-600',
     glowColor: 'rgba(59,130,246,0.4)'
   },
   {
+    id: 'resplandor_falso',
+    name: 'Velo de Cristal',
+    description: 'Evasión ansiosa en la ilusión brillante.',
+    icon: ShieldAlert,
+    x: 12,
+    y: 30,
+    color: 'from-rose-500 to-amber-600',
+    glowColor: 'rgba(244,63,94,0.4)'
+  },
+  {
+    id: 'grieta_resplandor',
+    name: 'Confort Roto',
+    description: 'Identificar las imperfecciones en la luz deslumbrante.',
+    icon: Sparkle,
+    x: 38,
+    y: 30,
+    color: 'from-amber-300 to-zinc-500',
+    glowColor: 'rgba(245,158,11,0.4)'
+  },
+  {
+    id: 'penumbra_rumiacion',
+    name: 'Niebla Mental',
+    description: 'Pensamientos acelerados al evitar la incomodidad.',
+    icon: HelpCircle,
+    x: 62,
+    y: 30,
+    color: 'from-indigo-500 to-purple-800',
+    glowColor: 'rgba(99,102,241,0.4)'
+  },
+  {
+    id: 'encuentro_entidad',
+    name: 'La Entidad Sombría',
+    description: 'Dar un paso hacia la sombra sin juzgarla.',
+    icon: Ghost,
+    x: 88,
+    y: 30,
+    color: 'from-cyan-300 to-teal-700',
+    glowColor: 'rgba(20,184,166,0.5)'
+  },
+
+  // Capítulo II: El Naufragio
+  {
+    id: 'cap2_el_naufragio',
+    name: 'El Naufragio',
+    description: 'Hiraeth: El anhelo nostálgico de un lugar inalcanzable.',
+    icon: Anchor,
+    x: 50,
+    y: 44,
+    color: 'from-blue-600 to-slate-900',
+    glowColor: 'rgba(37,99,235,0.5)'
+  },
+  {
+    id: 'cap2_espejos_rotos',
+    name: 'Espejos Agrietados',
+    description: 'Aceptar la identidad fragmentada ante tu reflejo.',
+    icon: Sparkles,
+    x: 28,
+    y: 56,
+    color: 'from-teal-400 to-emerald-700',
+    glowColor: 'rgba(45,212,191,0.5)'
+  },
+  {
+    id: 'cap2_relojes_detenidos',
+    name: 'Relojes del Ayer',
+    description: 'Aferrarte a recuerdos suspendidos en el agua negra.',
+    icon: Clock,
+    x: 50,
+    y: 56,
+    color: 'from-violet-500 to-slate-800',
+    glowColor: 'rgba(139,92,246,0.5)'
+  },
+  {
+    id: 'cap2_sombra_lago',
+    name: 'El Reflejo Guía',
+    description: 'Caminar junto a la sombra con ojos de heterocromía.',
+    icon: Moon,
+    x: 72,
+    y: 56,
+    color: 'from-sky-300 to-indigo-600',
+    glowColor: 'rgba(56,189,248,0.5)'
+  },
+
+  // Capítulo III: Punto Ciego
+  {
+    id: 'cap3_punto_ciego',
+    name: 'Punto Ciego',
+    description: 'El trauma como un reflejo vigilante sin romper.',
+    icon: Eye,
+    x: 50,
+    y: 70,
+    color: 'from-purple-600 to-rose-900',
+    glowColor: 'rgba(147,51,234,0.6)'
+  },
+  {
+    id: 'cap3_mirada_directa',
+    name: 'Mirada Directa',
+    description: 'Sostener la mirada al espejo del trauma y liberar la culpa.',
+    icon: Flame,
+    x: 28,
+    y: 82,
+    color: 'from-rose-500 to-amber-500',
+    glowColor: 'rgba(244,63,94,0.6)'
+  },
+  {
+    id: 'cap3_refugio_niebla',
+    name: 'Refugio de Niebla',
+    description: 'Usar la niebla como un abrazo protector para tomar respiro.',
+    icon: CloudFog,
+    x: 50,
+    y: 82,
+    color: 'from-slate-400 to-indigo-700',
+    glowColor: 'rgba(148,163,184,0.5)'
+  },
+  {
+    id: 'cap3_sombra_trauma',
+    name: 'Tránsito de Sombra',
+    description: 'Caminar junto a La Entidad absorbiendo el juicio del trauma.',
+    icon: Ghost,
+    x: 72,
+    y: 82,
+    color: 'from-cyan-400 to-purple-800',
+    glowColor: 'rgba(34,211,238,0.6)'
+  },
+
+  // Capítulo IV: El Descanso
+  {
+    id: 'cap4_el_descanso',
+    name: 'El Descanso',
+    description: 'La cima de la psique. ¿O es que la sombra siempre fue el espejo?',
+    icon: CheckCircle2,
+    x: 50,
+    y: 96,
+    color: 'from-zinc-200 via-amber-300 to-cyan-500',
+    glowColor: 'rgba(255,255,255,0.7)'
+  },
+
+  // Finales Principales
+  {
     id: 'bad_ending_light',
-    name: 'La Ceguera',
-    description: 'Consumida por el resplandor vacío, Hakumi se desvanece.',
+    name: 'La Fuga Incompleta',
+    description: 'Final Malo: Escapar ciego creyendo haber ganado.',
     icon: EyeOff,
-    x: 20,
-    y: 85,
+    x: 15,
+    y: 115,
     color: 'from-red-600 to-rose-950',
-    glowColor: 'rgba(220,38,38,0.5)'
+    glowColor: 'rgba(220,38,38,0.6)'
   },
   {
     id: 'good_ending_acceptance',
-    name: 'La Aceptación',
-    description: 'Abrazando las sombras y los recuerdos fragmentados para sanar.',
+    name: 'El Reflejo Roto',
+    description: 'Final Bueno: Atrapada en el sueño eterno del recuerdo.',
     icon: Heart,
-    x: 80,
-    y: 85,
-    color: 'from-emerald-400 to-teal-600',
-    glowColor: 'rgba(16,185,129,0.5)'
+    x: 50,
+    y: 115,
+    color: 'from-emerald-400 to-teal-800',
+    glowColor: 'rgba(16,185,129,0.6)'
+  },
+  {
+    id: 'true_ending_equilibrium',
+    name: 'La Sombra fue el Faro',
+    description: 'Final Verdadero: Integración y equilibrio luz/sombra.',
+    icon: Sparkles,
+    x: 85,
+    y: 115,
+    color: 'from-amber-300 via-cyan-400 to-purple-600',
+    glowColor: 'rgba(234,179,8,0.7)'
   }
 ];
 
 const FLOW_EDGES = [
-  { from: 'start', to: 'escena_luz', side: 'left' },
-  { from: 'start', to: 'escena_oscuridad', side: 'right' },
-  { from: 'escena_luz', to: 'bad_ending_light', side: 'left' },
-  { from: 'escena_oscuridad', to: 'good_ending_acceptance', side: 'right' }
+  // Capítulo I
+  { from: 'start', to: 'escena_resplandor', side: 'left' },
+  { from: 'start', to: 'escena_penumbra', side: 'right' },
+  { from: 'escena_resplandor', to: 'resplandor_falso', side: 'left' },
+  { from: 'escena_resplandor', to: 'grieta_resplandor', side: 'right' },
+  { from: 'escena_penumbra', to: 'penumbra_rumiacion', side: 'left' },
+  { from: 'escena_penumbra', to: 'encuentro_entidad', side: 'right' },
+
+  // Transición a Capítulo II
+  { from: 'resplandor_falso', to: 'bad_ending_light', side: 'left' },
+  { from: 'resplandor_falso', to: 'cap2_el_naufragio', side: 'right' },
+  { from: 'grieta_resplandor', to: 'cap2_el_naufragio', side: 'left' },
+  { from: 'penumbra_rumiacion', to: 'cap2_el_naufragio', side: 'right' },
+  { from: 'penumbra_rumiacion', to: 'good_ending_acceptance', side: 'left' },
+  { from: 'encuentro_entidad', to: 'cap2_el_naufragio', side: 'right' },
+
+  // Capítulo II -> Capítulo III
+  { from: 'cap2_el_naufragio', to: 'cap2_espejos_rotos', side: 'left' },
+  { from: 'cap2_el_naufragio', to: 'cap2_relojes_detenidos', side: 'left' },
+  { from: 'cap2_el_naufragio', to: 'cap2_sombra_lago', side: 'right' },
+  { from: 'cap2_espejos_rotos', to: 'cap3_punto_ciego', side: 'right' },
+  { from: 'cap2_relojes_detenidos', to: 'cap3_punto_ciego', side: 'center' },
+  { from: 'cap2_relojes_detenidos', to: 'good_ending_acceptance', side: 'left' },
+  { from: 'cap2_sombra_lago', to: 'cap3_punto_ciego', side: 'right' },
+
+  // Capítulo III -> Capítulo IV
+  { from: 'cap3_punto_ciego', to: 'cap3_mirada_directa', side: 'left' },
+  { from: 'cap3_punto_ciego', to: 'cap3_refugio_niebla', side: 'center' },
+  { from: 'cap3_punto_ciego', to: 'cap3_sombra_trauma', side: 'right' },
+  { from: 'cap3_mirada_directa', to: 'cap4_el_descanso', side: 'left' },
+  { from: 'cap3_refugio_niebla', to: 'cap4_el_descanso', side: 'center' },
+  { from: 'cap3_sombra_trauma', to: 'cap4_el_descanso', side: 'right' },
+
+  // Capítulo IV -> Finales
+  { from: 'cap4_el_descanso', to: 'bad_ending_light', side: 'left' },
+  { from: 'cap4_el_descanso', to: 'good_ending_acceptance', side: 'center' },
+  { from: 'cap4_el_descanso', to: 'true_ending_equilibrium', side: 'right' }
 ];
 
 export default function StoryFlowchart() {
@@ -116,12 +306,12 @@ export default function StoryFlowchart() {
         <span>Tejido del Destino</span>
       </div>
 
-      <div className="relative w-full aspect-[100/115] bg-zinc-950/20 border border-zinc-900/60 rounded-xl p-4 overflow-hidden backdrop-blur-md">
+      <div className="relative w-full aspect-[100/135] bg-zinc-950/20 border border-zinc-900/60 rounded-xl p-4 overflow-hidden backdrop-blur-md">
         {/* Glow effect under active nodes */}
         <div className="absolute inset-0 pointer-events-none bg-radial-gradient from-zinc-950 to-transparent opacity-60" />
 
         {/* SVG connection lines */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 115" fill="none">
+        <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 135" fill="none">
           <defs>
             <linearGradient id="edge-active-left" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stopColor="#71717a" stopOpacity="0.8" />
@@ -138,9 +328,11 @@ export default function StoryFlowchart() {
           </defs>
 
           {FLOW_EDGES.map((edge, idx) => {
-            const fromNode = FLOW_NODES.find((n) => n.id === edge.from)!;
-            const toNode = FLOW_NODES.find((n) => n.id === edge.to)!;
+            const fromNode = FLOW_NODES.find((n) => n.id === edge.from);
+            const toNode = FLOW_NODES.find((n) => n.id === edge.to);
             
+            if (!fromNode || !toNode) return null;
+
             const active = isEdgeActive(edge.from, edge.to);
             const visited = isEdgeVisited(edge.from, edge.to);
 
@@ -155,13 +347,11 @@ export default function StoryFlowchart() {
 
             let strokeColor = '#18181b'; // zinc-900 (unvisited)
             let strokeWidth = 1.5;
-            let filter = undefined;
             let strokeDasharray = undefined;
 
             if (active) {
               strokeColor = edge.side === 'left' ? '#f43f5e' : '#3b82f6';
               strokeWidth = 2.5;
-              filter = 'url(#glow-luz)';
             } else if (visited) {
               strokeColor = '#52525b'; // zinc-600 (visited but inactive)
               strokeWidth = 1.8;
@@ -205,7 +395,6 @@ export default function StoryFlowchart() {
           // Determine node classes
           let nodeStyles = '';
           let iconColor = 'text-zinc-600';
-          let borderGlow = 'none';
 
           if (isActive) {
             nodeStyles = 'bg-zinc-900 border-zinc-200 text-white shadow-[0_0_15px_rgba(255,255,255,0.15)] scale-110';
@@ -221,86 +410,43 @@ export default function StoryFlowchart() {
           return (
             <div
               key={node.id}
-              className="absolute group transition-all duration-300"
-              style={{
-                left: `${node.x}%`,
-                top: `${node.y}%`,
-                transform: 'translate(-50%, -50%)',
-                zIndex: isActive ? 20 : 10,
-              }}
+              style={{ left: `${node.x}%`, top: `${node.y}%` }}
+              className="absolute -translate-x-1/2 -translate-y-1/2 group"
               onMouseEnter={() => setHoveredNode(node)}
               onMouseLeave={() => setHoveredNode(null)}
               onClick={() => handleNodeClick(node.id, isVisited)}
             >
-              {/* Pulsing ring for active node */}
-              {isActive && (
-                <div 
-                  className="absolute inset-0 rounded-full animate-ping opacity-40" 
-                  style={{
-                    border: '1px solid rgba(255,255,255,0.6)',
-                  }}
-                />
-              )}
-
-              {/* Node Circle */}
-              <div className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-300 ${nodeStyles}`}>
-                <NodeIcon className={`w-5 h-5 ${iconColor} transition-colors duration-300`} />
-              </div>
-
-              {/* Node Title (Horizontal Label) */}
-              <div 
-                className={`absolute left-1/2 -translate-x-1/2 mt-2 whitespace-nowrap text-[10px] font-mono tracking-wider transition-colors duration-300 ${
-                  isActive 
-                    ? 'text-zinc-100 font-bold' 
-                    : isVisited 
-                      ? 'text-zinc-400 group-hover:text-zinc-200' 
-                      : 'text-zinc-700'
-                }`}
+              <div
+                className={`relative w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-300 ${nodeStyles}`}
               >
-                {node.name}
+                {/* Pulse animation for active node */}
+                {isActive && (
+                  <span className="absolute inset-0 rounded-full bg-white/20 animate-ping" />
+                )}
+                
+                <NodeIcon className={`w-4 h-4 ${iconColor}`} />
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* Tooltip / Info Box */}
-      <div className="mt-8 min-h-[90px] bg-zinc-950/40 border border-zinc-900/80 rounded-lg p-4 transition-all duration-300 flex flex-col justify-center">
+      {/* Tooltip / Info Box for Hovered Node */}
+      <div className="mt-4 p-3 bg-zinc-900/60 border border-zinc-800 rounded-lg min-h-[75px] flex flex-col justify-center">
         {hoveredNode ? (
-          <div>
-            <div className="flex items-center justify-between mb-1">
-              <h4 className="text-xs font-serif font-bold text-zinc-300 tracking-wider">
-                {hoveredNode.name}
-              </h4>
-              <span className={`text-[9px] font-mono px-1.5 py-0.5 rounded border ${
-                currentSceneId === hoveredNode.id
-                  ? 'border-white/20 text-white bg-white/5'
-                  : visitedNodeIds.includes(hoveredNode.id)
-                    ? 'border-zinc-800 text-zinc-400'
-                    : 'border-zinc-950 text-zinc-800 bg-zinc-950/20'
-              }`}>
-                {currentSceneId === hoveredNode.id 
-                  ? 'Estás aquí' 
-                  : visitedNodeIds.includes(hoveredNode.id)
-                    ? 'Explorado (Saltar)' 
-                    : 'No explorado'}
-              </span>
+          <>
+            <div className="flex items-center space-x-2 text-xs font-semibold text-zinc-200">
+              <span className="w-1.5 h-1.5 rounded-full bg-zinc-400" />
+              <span>{hoveredNode.name}</span>
             </div>
-            <p className="text-[11px] font-mono text-zinc-500 leading-relaxed mb-1">
+            <p className="text-[11px] text-zinc-400 mt-1 leading-snug">
               {hoveredNode.description}
             </p>
-            {visitedNodeIds.includes(hoveredNode.id) && currentSceneId !== hoveredNode.id && (
-              <p className="text-[9px] font-mono text-amber-500/80 flex items-center">
-                &gt; Haz clic en el nodo para viajar a esta escena.
-              </p>
-            )}
-          </div>
+          </>
         ) : (
-          <div className="text-center py-2">
-            <p className="text-xs font-serif italic text-zinc-600">
-              Pasa el cursor sobre un nodo para ver detalles del camino...
-            </p>
-          </div>
+          <p className="text-[11px] text-zinc-500 italic text-center">
+            Pasa el cursor sobre los nodos desbloqueados para inspeccionar el mapa del destino.
+          </p>
         )}
       </div>
     </div>

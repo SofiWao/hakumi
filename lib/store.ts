@@ -76,7 +76,7 @@ function findPathAndState(targetSceneId: string): {
 
       const nextAnsiedad = current.ansiedad + (choice.stateChanges?.ansiedad || 0);
       const nextEsperanza = current.esperanza + (choice.stateChanges?.esperanza || 0);
-      let nextThoughts = [...current.thoughts];
+      const nextThoughts = [...current.thoughts];
       if (choice.newThought) {
         if (!nextThoughts.some(t => t.id === choice.newThought!.id)) {
           nextThoughts.push(choice.newThought);
@@ -138,7 +138,7 @@ export const useGameStore = create<GameState>()(
           const newAnsiedad = state.ansiedad + (choice.stateChanges?.ansiedad || 0);
           const newEsperanza = state.esperanza + (choice.stateChanges?.esperanza || 0);
           
-          let newThoughts = [...state.thoughts];
+          const newThoughts = [...state.thoughts];
           if (choice.newThought) {
             const thoughtExists = state.thoughts.find(t => t.id === choice.newThought!.id);
             if (!thoughtExists) {
