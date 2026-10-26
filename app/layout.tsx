@@ -13,7 +13,7 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  title: "Hakumi - Abyssal Light",
+  title: "Hakumi: Abyssal Light of a Mind Lost in Darkness",
   description: "A psychological horror and therapeutic visual novel.",
 };
 

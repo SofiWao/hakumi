@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { storyNodes, StoryChoice } from './storyNodes';
+import { audioManager } from './audioManager';
 
 export type Thought = {
   id: string;
@@ -22,11 +23,14 @@ interface GameState {
   esperanza: number;
   thoughts: Thought[];
   visitedNodeIds: string[];
+  isAudioMuted: boolean;
   
   makeChoice: (choice: StoryChoice) => void;
   goBack: () => void;
   resetGame: () => void;
   jumpToNode: (sceneId: string) => void;
+  toggleAudioMuted: () => void;
+  setAudioMuted: (muted: boolean) => void;
 }
 
 // Helper to find path and calculate states dynamically using BFS
@@ -124,9 +128,32 @@ export const useGameStore = create<GameState>()(
       esperanza: 0,
       thoughts: [],
       visitedNodeIds: ['start'],
+      isAudioMuted: false,
+
+      toggleAudioMuted: () => {
+        set((state) => {
+          const next = !state.isAudioMuted;
+          audioManager.setMuted(next);
+          return { isAudioMuted: next };
+        });
+      },
+
+      setAudioMuted: (muted: boolean) => {
+        audioManager.setMuted(muted);
+        set({ isAudioMuted: muted });
+      },
 
       makeChoice: (choice: StoryChoice) => {
         set((state) => {
+          // Reproducir SFX según el impacto de la decisión
+          audioManager.playSFX('choice_click');
+          if (choice.newThought) {
+            audioManager.playSFX('thought_unlock');
+          }
+          if (storyNodes[choice.nextSceneId]?.isGlitchy) {
+            audioManager.playSFX('glitch');
+          }
+
           const prevHistoryStep: HistoryStep = {
             sceneId: state.currentSceneId,
             ansiedad: state.ansiedad,
@@ -190,6 +217,8 @@ export const useGameStore = create<GameState>()(
       jumpToNode: (sceneId: string) => {
         set((state) => {
           if (state.currentSceneId === sceneId) return state;
+
+          audioManager.playSFX('transition');
 
           // 1. Check if the target scene is in our current history path
           const historyIdx = state.history.findIndex(h => h.sceneId === sceneId);

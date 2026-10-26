@@ -93,10 +93,22 @@ Todas las ramificaciones del juego convergen en tres destinos principales:
 
 ---
 
-## 6. Diseño Sonoro y Arquitectura de Audio
+## 6. Diseño Sonoro y Arquitectura de Audio (`lib/audioManager.ts`)
 
-La música es un elemento narrativo vivo (inspirado conceptualmente en Toby Fox y *Everywhere at the End of Time* de The Caretaker):
+La música es un elemento narrativo vivo (inspirado conceptualmente en Toby Fox y *Everywhere at the End of Time* de The Caretaker).
 
+### A. Gestión de BGM (Música de Fondo)
+* **Capítulo 1:** Pista `UnNuevoComienzo.mp3` ubicada en `/web de referencia/audios/UnNuevoComienzo.mp3` (con respaldo fallback en `/audios/UnNuevoComienzo.mp3`).
+* **Flujo e Inicio:** Comienza a reproducirse **exactamente en el instante en que finaliza la pantalla de carga** (al transicionar al gameplay tras "Nueva Partida" o "Continuar").
+* **Exclusividad de Pistas:** Detención total de audio previo (video de menú o carga) antes de arrancar la nueva pista.
+* **Continuidad de Capítulo:** La pista se ejecuta en bucle continuo abarcando todo el Capítulo 1 sin interrupciones entre nodos.
+* **Control de Audio (Mute / Unmute):** Botón superior derecho ubicado al costado del botón del Árbol de Decisiones (`Sidebar.tsx`) sin superponerlo ni modificarlo, permitiendo silenciar o activar la música en cualquier momento. El estado se persiste en el store global (`lib/store.ts`).
+
+### B. Estructura y Motor de SFX (Efectos de Sonido)
+* Registro extensible para efectos de sonido clave (`choice_click`, `thought_unlock`, `glitch`, `heartbeat`, `transition`, `ambient_hum`).
+* Soporta reproducción de archivos de audio dedicados con fallback automático a síntesis procedural psicológica vía Web Audio API (evitando errores 404 si aún no se han provisto archivos de audio físicos).
+
+### C. Referencias Conceptuales y Sonoridad por Escenario
 * **Vacío Inicial (3 segundos):** Zumbido grave (60 Hz), seco, sin música. Representa la desrealización/disociación absoluta.
 * **Ruta del Resplandor (Neutro Cálido):** Melodías acogedoras tipo cajita musical (referencias: *Safe Again*, *Temporex*). **Efecto dinámico:** Al resolver un puzle, la música se pausa 0.5s (el confort falso que se quiebra).
 * **Ruta de la Penumbra (Neutro Frío):** Sonido clínico, desorientador, con desafección y reverb denso (referencias: *Lost_Memories.wav*, *Little Nightmares*, *d2s1*, EATEOT Stage 2/3). Representa la rumiación.
@@ -154,4 +166,4 @@ La música es un elemento narrativo vivo (inspirado conceptualmente en Toby Fox 
 3. **Regla de Expansión Directa:** Toda incorporación de nodos en `lib/storyNodes.ts` exige la actualización sincronizada de las coordenadas y aristas en `components/StoryFlowchart.tsx` conforme a las reglas descritas en `AGENTS.md`.
 
 ---
-*Este documento `context.md` constituye la especificación de referencia canónica para el desarrollo de Hakumi: Abyssal Light.*
+*Este documento `context.md` constituye la especificación de referencia canónica para el desarrollo de Hakumi: Abyssal Light of a Mind Lost in Darkness.*

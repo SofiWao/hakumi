@@ -91,9 +91,10 @@ interface LoadingScreenProps {
   customQuote?: string;
   subtext?: string;
   durationMs?: number;
+  onContinue?: () => void;
 }
 
-export default function LoadingScreen({ customQuote, subtext, durationMs = 5000 }: LoadingScreenProps) {
+export default function LoadingScreen({ customQuote, subtext, durationMs = 5000, onContinue }: LoadingScreenProps) {
   const [selectedQuote, setSelectedQuote] = useState<{ category: string; text: string } | null>(null);
 
   useEffect(() => {
@@ -101,6 +102,18 @@ export default function LoadingScreen({ customQuote, subtext, durationMs = 5000 
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelectedQuote(REFLECTIVE_QUOTES[randomIdx]);
   }, []);
+
+  useEffect(() => {
+    if (!onContinue) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        onContinue();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onContinue]);
 
   const quoteToDisplay = customQuote || selectedQuote?.text || "Adentrándote en la penumbra de tu mente...";
   const categoryToDisplay = selectedQuote?.category || "Susurro del Abismo";
@@ -134,10 +147,24 @@ export default function LoadingScreen({ customQuote, subtext, durationMs = 5000 
           &ldquo;{quoteToDisplay}&rdquo;
         </motion.blockquote>
 
-        {/* Subtitle & 5-Second Animated Progress Bar */}
+        {/* Action Button, Subtitle & Progress Bar */}
         <div className="pt-8 flex flex-col items-center space-y-4 w-full max-w-xs">
-          <p className="font-mono text-xs text-zinc-500 uppercase tracking-widest">
-            {subtext || "Sincronizando los hilos de la realidad..."}
+          {onContinue && (
+            <motion.button 
+              type="button"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={onContinue}
+              className="px-8 py-2.5 bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-700/80 hover:border-red-400 text-zinc-200 hover:text-white font-mono text-xs uppercase tracking-[0.25em] rounded transition-all duration-300 shadow-lg shadow-black/60 cursor-pointer"
+            >
+              Continuar
+            </motion.button>
+          )}
+
+          <p className="font-mono text-xs text-zinc-400 uppercase tracking-widest text-center">
+            {subtext || "Construyendo el entramado de la psyque"}
           </p>
 
           {/* Minimal 5-second loading progress bar */}

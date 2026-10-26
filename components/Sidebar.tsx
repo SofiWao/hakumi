@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Brain, X, ChevronRight } from 'lucide-react';
+import { Brain, X, ChevronRight, Volume2, VolumeX } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useGameStore } from '@/lib/store';
 import StoryFlowchart from './StoryFlowchart';
@@ -9,17 +9,42 @@ import StoryFlowchart from './StoryFlowchart';
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'mente' | 'destino'>('mente');
-  const { ansiedad, esperanza, thoughts } = useGameStore();
+  const { ansiedad, esperanza, thoughts, isAudioMuted, toggleAudioMuted } = useGameStore();
 
   return (
     <>
-      {/* Botón flotante para abrir la mente */}
-      <button 
-        onClick={() => setIsOpen(true)}
-        className="fixed top-6 right-6 z-50 p-3 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-all duration-300"
+      {/* Barra de controles superior derecha: Música y Árbol de Decisiones */}
+      <div 
+        className={`fixed top-6 right-6 z-40 flex items-center space-x-3 transition-opacity duration-300 ${
+          isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'
+        }`}
       >
-        <Brain className="w-6 h-6" />
-      </button>
+        {/* Botón para encender o apagar la música */}
+        <button
+          type="button"
+          onClick={toggleAudioMuted}
+          title={isAudioMuted ? "Encender música" : "Silenciar música"}
+          aria-label={isAudioMuted ? "Encender música" : "Silenciar música"}
+          className="p-3 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-all duration-300 shadow-lg cursor-pointer"
+        >
+          {isAudioMuted ? (
+            <VolumeX className="w-6 h-6 text-zinc-500" />
+          ) : (
+            <Volume2 className="w-6 h-6 text-cyan-400" />
+          )}
+        </button>
+
+        {/* Botón flotante para abrir la mente y el árbol de decisiones */}
+        <button 
+          type="button"
+          onClick={() => setIsOpen(true)}
+          title="Abrir Árbol de Decisiones y Estado Mental"
+          aria-label="Abrir Árbol de Decisiones"
+          className="p-3 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700 transition-all duration-300 shadow-lg cursor-pointer"
+        >
+          <Brain className="w-6 h-6" />
+        </button>
+      </div>
 
       <AnimatePresence>
         {isOpen && (
@@ -46,9 +71,28 @@ export default function Sidebar() {
                 <h2 className="text-xl font-serif tracking-widest text-zinc-200">
                   {activeTab === 'mente' ? 'MI MENTE' : 'MI DESTINO'}
                 </h2>
-                <button onClick={() => setIsOpen(false)} className="text-zinc-500 hover:text-white transition-colors">
-                  <X className="w-6 h-6" />
-                </button>
+                <div className="flex items-center space-x-2">
+                  <button
+                    type="button"
+                    onClick={toggleAudioMuted}
+                    title={isAudioMuted ? "Encender música" : "Silenciar música"}
+                    aria-label={isAudioMuted ? "Encender música" : "Silenciar música"}
+                    className="p-1.5 rounded-full text-zinc-500 hover:text-white hover:bg-zinc-900 transition-colors cursor-pointer"
+                  >
+                    {isAudioMuted ? (
+                      <VolumeX className="w-5 h-5 text-zinc-500" />
+                    ) : (
+                      <Volume2 className="w-5 h-5 text-cyan-400" />
+                    )}
+                  </button>
+                  <button 
+                    onClick={() => setIsOpen(false)} 
+                    className="text-zinc-500 hover:text-white transition-colors cursor-pointer"
+                    aria-label="Cerrar panel"
+                  >
+                    <X className="w-6 h-6" />
+                  </button>
+                </div>
               </div>
 
               {/* Tabs selector */}
